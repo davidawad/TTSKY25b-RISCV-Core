@@ -26,7 +26,7 @@ async def uart_decoder(rx, period):
     return val
 
 
-@cocotb.test()
+@cocotb.test(timeout_time=10, timeout_unit="sec")  # Give it 10 seconds
 async def test_uart_functionality(dut):
     dut._log.info("Start UART test")
 

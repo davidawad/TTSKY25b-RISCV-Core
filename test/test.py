@@ -41,11 +41,7 @@ async def test_uart_functionality(dut):
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    # Wait for RISC-V to boot from SPI flash and start UART transmission
-    # This typically requires hundreds of thousands of cycles
-    await ClockCycles(dut.clk, 500000)
-
-    dut._log.info("Test GPIO as UART")
+    dut._log.info("Test GPIO as UART - waiting for UART transmission")
 
     expected = "SERV+Tinytapeout rocks!\n"
     for e in expected:

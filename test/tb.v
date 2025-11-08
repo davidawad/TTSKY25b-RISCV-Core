@@ -22,16 +22,18 @@ module tb ();
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
-   wire	     gpio0;
-   wire	     gpio1;
-   wire	     gpio2;
-   wire	     gpio3;
-   wire	     gpio4;
 
 `ifdef GL_TEST
   wire VPWR = 1'b1;
   wire VGND = 1'b0;
 `endif
+
+  // Extract GPIO signals from output
+  wire gpio0 = uo_out[0];
+  wire gpio1 = uo_out[1];
+  wire gpio2 = uo_out[2];
+  wire gpio3 = uo_out[3];
+  wire gpio4 = uo_out[4];
 
   tt_um_underserved user_project (
 
@@ -42,7 +44,7 @@ module tb ();
 `endif
 
       .ui_in  (ui_in),    // Dedicated inputs
-      .uo_out ({uo_out[7:5], gpio4, gpio3, gpio2, gpio1, gpio0}),   // Dedicated outputs
+      .uo_out (uo_out),   // Dedicated outputs
       .uio_in (uio_in),   // IOs: Input path
       .uio_out(uio_out),  // IOs: Output path
       .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)

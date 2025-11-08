@@ -6,6 +6,26 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles, FallingEdge, Timer
 
 
+@cocotb.test()
+async def test_placeholder(dut):
+    """Placeholder test - passes basic reset sequence"""
+    dut._log.info("Running placeholder test")
+
+    # Set up clock
+    clock = Clock(dut.clk, 50, unit="ns")
+    cocotb.start_soon(clock.start())
+
+    # Initialize signals
+    dut.ena.value = 1
+    dut.uio_in.value = 0
+    dut.rst_n.value = 0
+    await ClockCycles(dut.clk, 10)
+    dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 100)
+
+    dut._log.info("Placeholder test passed")
+
+
 async def uart_decoder(rx, period):
     await FallingEdge(rx)
 
